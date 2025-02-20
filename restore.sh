@@ -6864,6 +6864,10 @@ menu_main() {
                     esac
                 fi
             fi
+            menu_items+=("Bruteforce Passcode")
+            if ((device_proc < 10)); then
+
+            fi
             if [[ $device_unactivated == 1 ]]; then
                 menu_items+=("Attempt Activation")
             elif [[ $device_mode == "Recovery" ]]; then
@@ -6892,6 +6896,7 @@ menu_main() {
         case $selected in
             "Restore/Downgrade" ) menu_restore;;
             "Jailbreak Device" ) device_jailbreak_confirm;;
+            "Bruteforce Passcode" ) menu_bruteforce;;
             "Save SHSH Blobs" ) menu_shsh;;
             "Sideload IPA" ) menu_ipa "$selected";;
             "App Management" ) menu_appmanage;;
@@ -7445,6 +7450,22 @@ menu_restore() {
             "IPSW Downloader" ) menu_ipsw_downloader "$1";;
             * ) menu_ipsw "$selected" "$1";;
         esac
+    done
+}
+
+menu_bruteforce() {
+    local menu_items
+    local selected
+    local back
+
+    while [[ -z "$mode" && -z "$back" ]]; do
+        menu_items+=("32bit SSH Ramdisk")
+
+        input "Select an option:"
+        select_option "${menu_items[@]}"
+        selected="${menu_items[$?]}"
+        case $selected in
+            "Go Back" ) back=1;;
     done
 }
 
